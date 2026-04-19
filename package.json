@@ -1,0 +1,29 @@
+{
+  "name": "chinese-novels",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "generate": "tsx scripts/translate.ts"
+  },
+  "dependencies": {
+    "cheerio": "^1.2.0",
+    "gray-matter": "^4.0.3",
+    "next": "^14.2.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "react-markdown": "^10.1.0"
+  },
+  "devDependencies": {
+    "@google/genai": "^1.50.1",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "dotenv": "^17.4.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.4.0"
+  }
+}
