@@ -16,7 +16,7 @@ async function translateChapter(content: string) {
         Translate the following chapter from Chinese to Vietnamese.
         The translation should be natural, capturing the tone and nuances of the original text.
         
-        IMPORTANT: Do NOT include the chapter number or phrases like "Chương 123" in the Title or the Translated Content.
+        IMPORTANT: Do NOT include the chapter number or phrases like "Chương 123" in the Title or the Translated Content. Title should not have any special characters like double quotes.
 
         Content:
         ${content}
