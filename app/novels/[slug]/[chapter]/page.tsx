@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import Sidebar from '@/components/Sidebar'
 import { getAllNovels, getNovelBySlug, getChapter } from '@/lib/novels'
+import ChapterPagination from '@/components/ChapterPagination'
 import styles from './page.module.css'
 
 interface PageProps {
@@ -42,20 +43,15 @@ export default async function ChapterReaderPage({ params }: PageProps) {
 
   if (!novel || !chapter) notFound()
 
-  const isFirst = chapterNum <= novel.chapters[0].number
-  const isLast = chapterNum >= novel.chapters[novel.chapters.length - 1].number
-
-  const prevChapter = novel.chapters.find(ch => ch.number < chapterNum)
-  const nextChapter = novel.chapters.find(ch => ch.number > chapterNum)
-
-  const prevHref = prevChapter ? `/novels/${slug}/${prevChapter.number}` : ''
-  const nextHref = nextChapter ? `/novels/${slug}/${nextChapter.number}` : ''
+  const chapterList = novel.chapters.map(ch => ({ 
+    number: ch.number, 
+    title: ch.title 
+  }))
 
   return (
     <>
       <Navbar />
       <Sidebar />
-
 
       <article className={styles.readerContainer} id="chapter-reader">
         {/* Breadcrumb */}
@@ -86,60 +82,24 @@ export default async function ChapterReaderPage({ params }: PageProps) {
           </span>
         </div>
 
-        {/* Hero image */}
-        {/* <div className={styles.heroImage}>
-          <Image
-            src="/covers/chapter-hero.svg"
-            alt={`Minh họa chương ${chapter.number}`}
-            fill
-            className={styles.heroImg}
-          />
-        </div> */}
+        {/* Top Pagination */}
+        <ChapterPagination 
+          chapters={chapterList} 
+          currentChapter={chapterNum} 
+          slug={slug} 
+        />
 
         {/* Body text */}
         <div className={styles.body}>
           <ReactMarkdown>{chapter.content}</ReactMarkdown>
         </div>
 
-        {/* Bottom navigation */}
-        <nav className={styles.bottomNav} id="chapter-nav">
-          {isFirst ? (
-            <span className={`${styles.navBtn} ${styles.navBtnDisabled}`}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
-              Trước
-            </span>
-          ) : (
-            <Link href={prevHref} className={styles.navBtn} id="btn-prev-chapter">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <polyline points="15 18 9 12 15 6" />
-              </svg>
-              Trước
-            </Link>
-          )}
-
-          <div className={styles.navCenter}>
-            <span className={styles.navDot} />
-            <span>{chapter.title}</span>
-          </div>
-
-          {isLast ? (
-            <span className={`${styles.navBtn} ${styles.navBtnDisabled}`}>
-              Tiếp
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <polyline points="9 18 15 12 9 6" />
-              </svg>
-            </span>
-          ) : (
-            <Link href={nextHref} className={styles.navBtn} id="btn-next-chapter">
-              Tiếp
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <polyline points="9 18 15 12 9 6" />
-              </svg>
-            </Link>
-          )}
-        </nav>
+        {/* Bottom Pagination */}
+        <ChapterPagination 
+          chapters={chapterList} 
+          currentChapter={chapterNum} 
+          slug={slug} 
+        />
 
         <Link href={`/novels/${slug}`} className={styles.backLink} id="btn-back-to-chapters">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -148,6 +108,7 @@ export default async function ChapterReaderPage({ params }: PageProps) {
           Quay lại danh sách chương
         </Link>
       </article>
+
 
       <Footer />
     </>

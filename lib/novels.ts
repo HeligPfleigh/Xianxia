@@ -33,7 +33,7 @@ export function getAllNovels(): Novel[] {
   return slugs.map(slug => getNovelBySlug(slug)).filter(Boolean) as Novel[]
 }
 
-export function getNovelBySlug(slug: string): Novel | undefined {
+export function getNovelBySlug(slug: string, includeContent = false): Novel | undefined {
   const novelDir = path.join(contentDirectory, slug)
   const metaPath = path.join(novelDir, 'index.json')
 
@@ -47,10 +47,25 @@ export function getNovelBySlug(slug: string): Novel | undefined {
   const chapters: Chapter[] = files
     .filter(file => file.endsWith('.md'))
     .map(file => {
+      const number = parseInt(file.replace('.md', ''))
+      
+      if (!includeContent) {
+        // Only read frontmatter for metadata
+        const fullPath = path.join(novelDir, file)
+        const fileContent = fs.readFileSync(fullPath, 'utf8')
+        const { data } = matter(fileContent)
+        return {
+          number,
+          title: data.title || '',
+          subtitle: data.subtitle || '',
+          readMinutes: data.readMinutes || 0,
+          content: ''
+        }
+      }
+
       const fullPath = path.join(novelDir, file)
       const fileContent = fs.readFileSync(fullPath, 'utf8')
       const { data, content } = matter(fileContent)
-      const number = parseInt(file.replace('.md', ''))
 
       return {
         number,
@@ -70,6 +85,6 @@ export function getNovelBySlug(slug: string): Novel | undefined {
 }
 
 export function getChapter(slug: string, chapterNum: number): Chapter | undefined {
-  const novel = getNovelBySlug(slug)
+  const novel = getNovelBySlug(slug, true)
   return novel?.chapters.find(c => c.number === chapterNum)
 }

@@ -60,6 +60,13 @@
   max-width: 520px;
 }
 
+.heroActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
 .startBtn {
   display: inline-flex;
   align-items: center;
@@ -78,6 +85,54 @@
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(232, 41, 74, 0.3);
 }
+
+.latestBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 11px 24px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-fast);
+}
+
+.latestBtn:hover {
+  background: var(--color-divider);
+  color: var(--color-text-primary);
+  border-color: var(--color-text-muted);
+}
+
+.downloadBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 11px 24px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-fast);
+}
+
+.downloadBtn:hover {
+  background: var(--color-divider);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.downloadBtn svg {
+  opacity: 0.8;
+}
+
+.downloadBtn:hover svg {
+  opacity: 1;
+}
+
 
 /* ===== Chapter List ===== */
 .chaptersSection {
@@ -125,5 +180,9 @@
 
   .description {
     max-width: 100%;
+  }
+
+  .heroActions {
+    justify-content: center;
   }
 }
