@@ -2,7 +2,6 @@ import { crawlChapters, crawlChapterContent, crawlChaptersXsw } from "./crawl";
 import fs from "fs";
 import path from "path";
 import { GoogleGenAI } from "@google/genai";
-import ollama from "ollama";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -27,22 +26,33 @@ async function translateChapter(content: string) {
         [Translated Content]
     `;
 
-  const response = await ai.models.generateContent({
-    model: "gemini-3.1-flash-lite-preview",
-    // model: 'gemini-2.5-flash',
-    // model: 'gemini-3-flash-preview',
-    // model: 'gemini-2.0-flash-lite',
-    contents: prompt,
-  });
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const response = await ai.models.generateContent({
+        model: "gemini-3.1-flash-lite-preview",
+        // model: 'gemini-2.5-flash',
+        // model: 'gemini-3-flash-preview',
+        // model: 'gemini-2.0-flash-lite',
+        contents: prompt,
+      });
 
-  return response.text;
-
-  // const response = await ollama.chat({
-  //     model: 'gemma4:e4b',
-  //     messages: [{ role: 'user', content: prompt }],
-  // })
-
-  // return response.message.content;
+      return response.text;
+    } catch (error: any) {
+      if (
+        attempt < 3 &&
+        (error.toString().includes("503") ||
+          error.toString().includes("UNAVAILABLE") ||
+          error.toString().includes("high demand"))
+      ) {
+        console.warn(
+          `Attempt ${attempt} failed due to high demand. Retrying in 2s...`,
+        );
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        continue;
+      }
+      throw error;
+    }
+  }
 }
 
 const FISRT_CHAPTER = 400;
