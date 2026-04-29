@@ -10,6 +10,13 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "";
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
 async function translateChapter(content: string) {
+  const models = [
+    "gemini-3.1-flash-lite-preview",
+    "gemini-3-flash-preview",
+    "gemini-2.5-flash",
+    "gemini-2.0-flash-lite",
+  ];
+
   const prompt = `
         You are a professional translator specializing in Chinese web novels. 
         Translate the following chapter from Chinese to Vietnamese.
@@ -26,33 +33,42 @@ async function translateChapter(content: string) {
         [Translated Content]
     `;
 
-  for (let attempt = 1; attempt <= 3; attempt++) {
-    try {
-      const response = await ai.models.generateContent({
-        model: "gemini-3.1-flash-lite-preview",
-        // model: 'gemini-2.5-flash',
-        // model: 'gemini-3-flash-preview',
-        // model: 'gemini-2.0-flash-lite',
-        contents: prompt,
-      });
+  let lastError: any;
 
-      return response.text;
-    } catch (error: any) {
-      if (
-        attempt < 3 &&
-        (error.toString().includes("503") ||
-          error.toString().includes("UNAVAILABLE") ||
-          error.toString().includes("high demand"))
-      ) {
-        console.warn(
-          `Attempt ${attempt} failed due to high demand. Retrying in 2s...`,
-        );
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        continue;
+  for (const model of models) {
+    console.log(`Using model: ${model}...`);
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        const response = await ai.models.generateContent({
+          model: model,
+          contents: prompt,
+        });
+
+        return response.text;
+      } catch (error: any) {
+        lastError = error;
+        const errorStr = error.toString();
+        const isRetryable =
+          errorStr.includes("503") ||
+          errorStr.includes("UNAVAILABLE") ||
+          errorStr.includes("high demand") ||
+          errorStr.includes("quota");
+
+        if (attempt < 3 && isRetryable) {
+          console.warn(
+            `Attempt ${attempt} for model ${model} failed. Retrying in 2s...`,
+          );
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+          continue;
+        }
+
+        console.warn(`Model ${model} failed: ${errorStr.substring(0, 100)}...`);
+        break; // Move to the next model
       }
-      throw error;
     }
   }
+
+  throw lastError || new Error("All models failed translation.");
 }
 
 const FISRT_CHAPTER = 400;
