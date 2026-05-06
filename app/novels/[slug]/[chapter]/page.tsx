@@ -7,6 +7,7 @@ import Footer from '@/components/Footer'
 import Sidebar from '@/components/Sidebar'
 import { getAllNovels, getNovelBySlug, getChapter } from '@/lib/novels'
 import ChapterPagination from '@/components/ChapterPagination'
+import ReadingProgress from '@/components/ReadingProgress'
 import styles from './page.module.css'
 
 interface PageProps {
@@ -50,7 +51,11 @@ export default async function ChapterReaderPage({ params }: PageProps) {
 
   return (
     <>
-      <Navbar />
+      <Navbar breadcrumbs={[
+        { label: novel.title, href: `/novels/${slug}` },
+        { label: `Chương ${chapter.number}` }
+      ]} />
+      <ReadingProgress />
       <Sidebar />
 
       <article className={styles.readerContainer} id="chapter-reader">

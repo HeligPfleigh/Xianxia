@@ -23,10 +23,10 @@ const ChapterList: React.FC<ChapterListProps> = ({
   novelSlug, 
   chaptersPerPage = 50 
 }) => {
-  const [currentPage, setCurrentPage] = useState(1)
-  
   const totalChapters = chapters.length
   const totalPages = Math.ceil(totalChapters / chaptersPerPage)
+
+  const [currentPage, setCurrentPage] = useState(totalPages)
   
   const startIndex = (currentPage - 1) * chaptersPerPage
   const endIndex = startIndex + chaptersPerPage

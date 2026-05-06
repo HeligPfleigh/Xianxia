@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation'
 import ReactMarkdown from 'react-markdown'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import ChapterRow from '@/components/ChapterRow'
 import { getAllNovels, getNovelBySlug } from '@/lib/novels'
 import ChapterList from '@/components/ChapterList'
 import styles from './page.module.css'
@@ -33,13 +32,11 @@ export default async function NovelDetailPage({ params }: PageProps) {
   const novel = getNovelBySlug(slug, false) // Don't include content for list page
   if (!novel) notFound()
 
-  const totalMinutes = novel.chapters.reduce((sum, ch) => sum + ch.readMinutes, 0)
-  const hours = Math.floor(totalMinutes / 60)
-  const mins = totalMinutes % 60
-
   return (
     <>
-      <Navbar/>
+      <Navbar breadcrumbs={[
+        { label: novel.title, href: `/novels/${slug}` },
+      ]}/>
 
       {/* Hero */}
       <section className={`${styles.hero} animateFadeIn`} id="novel-hero">

@@ -11,12 +11,57 @@
   z-index: 100;
 }
 
+.breadcrumbWrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  overflow: hidden;
+}
+
 .logo {
   font-weight: 800;
   font-size: 18px;
   letter-spacing: -0.3px;
   color: var(--color-text-primary);
   white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: 14px;
+  font-weight: 500;
+  overflow: hidden;
+}
+
+.breadcrumbItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  white-space: nowrap;
+}
+
+.separator {
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+.breadcrumbLink {
+  color: var(--color-text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.breadcrumbLink:hover {
+  color: var(--color-text-primary);
+}
+
+.breadcrumbCurrent {
+  color: var(--color-text-primary);
+  font-weight: 600;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .links {
