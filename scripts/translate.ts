@@ -21,7 +21,46 @@ async function translateChapter(content: string) {
         You are a professional translator specializing in Chinese web novels. 
         Translate the following chapter from Chinese to Vietnamese.
         The translation should be natural, capturing the tone and nuances of the original text.
-        
+       
+        CONSISTENT TERMINOLOGY & NAMES:
+        - Lý Truy Viễn (Tiểu Viễn): Main Character
+        - A Ly (Tần Liễu): Main Female Character
+        - Ngụy Chính Đạo (Đào Nhi): Powerful figure (Đầu/Đuôi)
+        - Thanh An: Sword spirit/ancestor
+        - Minh Ngưng Sương: Ngụy Chính Đạo's partner
+        - Thư Ngốc Tử (Thư Sinh / Mọt Sách / Thư Ngốc): Entity/Storyteller
+        - Tiên Cô: Female Entity
+        - Liễu Ngọc Mai: Grandmother of Lý Truy Viễn
+        - Lý Tam Giang: Grandfather of Lý Truy Viễn
+        - Tần Thúc (Chú Tần): Bodyguard / Long Vương
+        - Lưu Di (Dì Lưu): Family servant
+        - Triệu Nghị (Triệu Dũng): Long Vương
+        - Đào Trúc Minh: Long Vương
+        - Lệnh Ngũ Hành: Long Vương
+        - Vương Lâm (Vương Chấn / Thằng béo): Friend/Chef
+        - Trần Hi Diên (Trần Mộc Mộc / Trần Xước Linh): Female companion
+        - Lâm Thư Hữu (A Bạn / A Hữu): Male companion
+        - Âm Trường Sinh (Tần Trường Sinh): High Deity
+        - Phong Đô Đại Đế: Deity of Death
+        - Nam Thông: Region/City name
+        - Tư Nguyên: Village name
+        - Kiếm Các / Vọng Giang Lầu: Major organizations
+        - Bạch Hạc Đồng Tử: Immortal boy
+        - Đại Bạch Thử: Big white rat spirit
+        - Liễu Thanh Trừng: Ancestor / Long Vương
+        - Bổn Bổn (Tự Tự): Character nickname
+        - Triệu Nghị (Triệu Dũng): Long Vương
+        - Tô Diệc Chu (Mạc Diễm Chu): Character name
+        - A Đình (A Phượng): Servant name
+        - Minh Dư Khánh: Long Vương Minh gia (child version)
+        - Di Sinh: Monk/Ma character
+        - Phùng Bội / Tăng Tướng Quân: Other characters
+        - Long Vương: Dragon King (Title)
+        - Đào Hoa Kiếm / Lưu Thủy Kiếm: Spirit swords
+        - Hắc bì thư: Black-covered secret book
+        - Sinh Tử Bộ: Book of Life and Death
+        - Tẩu Giang: Trial of "walking the river"
+
         IMPORTANT: Do NOT include the chapter number or phrases like "Chương 123" in the Title or the Translated Content. Title should not have any special characters like double quotes.
 
         Content:
