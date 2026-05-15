@@ -9,8 +9,6 @@
   box-shadow: var(--shadow-card);
   margin: var(--space-xl) 0;
   gap: var(--space-md);
-  position: sticky;
-  top: var(--space-md);
   z-index: 10;
   backdrop-filter: blur(8px);
   background: rgba(255, 255, 255, 0.9);
@@ -104,11 +102,11 @@
   .navText {
     display: none;
   }
-  
+
   .navLink {
     padding: var(--space-sm);
   }
-  
+
   .pagination {
     padding: var(--space-xs) var(--space-sm);
     margin: var(--space-lg) 0;
