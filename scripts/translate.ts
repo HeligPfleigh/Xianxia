@@ -75,7 +75,7 @@ const FISRT_CHAPTER = 400;
 
 async function checkMissing() {
   const slug = "vot-thi-nhan";
-  // const url = "https://www.piaotia.com/html/15/15679/";
+  const url = "https://www.piaotia.com/html/15/15679/";
   const contentDir = path.join(process.cwd(), "content/novels", slug);
 
   if (!fs.existsSync(contentDir)) {
@@ -85,13 +85,13 @@ async function checkMissing() {
   console.log(`Checking missing chapters for ${slug}...`);
 
   // Get crawled chapters
-  // const crawledChapters = (await crawlChapters(url)).filter(
-  //   (ch) => ch.number >= FISRT_CHAPTER,
-  // );
-
-  const crawledChapters = (await crawlChaptersXsw()).filter(
+  const crawledChapters = (await crawlChapters(url)).filter(
     (ch) => ch.number >= FISRT_CHAPTER,
   );
+
+  // const crawledChapters = (await crawlChaptersXsw()).filter(
+  //   (ch) => ch.number >= FISRT_CHAPTER,
+  // );
 
   if (!crawledChapters || crawledChapters.length === 0) {
     console.log(
