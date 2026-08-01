@@ -2,7 +2,7 @@ name: Update Novels Chapters Data
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
   workflow_dispatch: # Allow manual trigger
 
 jobs:
@@ -19,8 +19,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: '24'
-          cache: 'yarn'
+          node-version: "24"
+          cache: "yarn"
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -29,6 +29,7 @@ jobs:
         run: yarn generate
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          NODE_TLS_REJECT_UNAUTHORIZED: "0"
 
       - name: Check for changes
         id: changes
